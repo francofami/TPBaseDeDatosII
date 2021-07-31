@@ -1,0 +1,55 @@
+<!-- <p>Solo enviar mensaje</p>
+<input type="text" [(ngModel)]="nuevoMensaje.mensaje">
+<button (click)="EnviarMensaje()">Enviar</button>
+<app-form-subir-archivos></app-form-subir-archivos> -->
+
+<h4>Coleccion tickets: </h4>
+<button mat-raised-button (click)="llamarApi('ticket','clientesConTicketsSinResolver')">Clientes con tickets sin resolver</button>
+<button mat-raised-button (click)="llamarApi('ticket', 'zonaConMasDesperfectos')">Zona con mas desperfectos</button>
+<button mat-raised-button (click)="llamarApi('ticket', 'queDesperfectosSuceden')">Que desperfectos suceden</button>
+<button mat-raised-button (click)="llamarApi('ticket', 'cadaCuantoSucedenDesperfectos')">Cada cuanto suceden desperfectos</button>
+
+<h4>Coleccion cliente: </h4>
+<button mat-raised-button (click)="llamarApi('cliente', 'quienHizoMasTickets')">Quienes hicieron mas tickets</button>
+<button mat-raised-button (click)="llamarApi('cliente', 'clienteEsEmpleado')">Clientes que son empleados</button>
+<button mat-raised-button (click)="llamarApi('cliente', 'zonaConMasClientes')">Zonas con mas clientes</button>
+
+<h4>Coleccion empleados: </h4>
+<button mat-raised-button (click)="llamarApi('empleado', 'quienAtiendeMasTickets')">Quien atiende mas tickets</button>
+<button mat-raised-button (click)="aQueHora()">A que hora hay mas trabajo</button>
+<button mat-raised-button (click)="llamarApi('empleado', 'queTanLejosDesperfecto')">Que tan lejos hay reclamos</button>
+
+<br><br><br>
+
+<div *ngIf="this.opcion=='clientesConTicketsSinResolver'">  <div *ngFor="let item of items">Cliente: {{item['nombreCliente']}}</div> </div>
+
+
+<div *ngIf="this.opcion=='zonaConMasDesperfectos'||this.opcion=='desperfectosAvellaneda'||this.opcion=='desperfectosLanus'"> 
+    <button mat-raised-button (click)="llamarApi('ticket','desperfectosAvellaneda')">Avellaneda</button>  <button mat-raised-button (click)="llamarApi('ticket','desperfectosLanus')">Lanus</button> 
+    <div *ngIf="this.opcion=='desperfectosAvellaneda'"> <div *ngFor="let item of items">Cliente: {{item['nombreCliente']}}</div>  </div> 
+    <div *ngIf="this.opcion=='desperfectosLanus'"> <div *ngFor="let item of items">Cliente: {{item['nombreCliente']}}</div>  </div>
+    <div *ngIf="this.opcion=='zonaConMasDesperfectos'"> <div *ngFor="let item of items">Localidad: {{item['_id']}} - Clientes: {{item['total']}} </div>  </div>
+</div>
+
+
+<div *ngIf="this.opcion=='queDesperfectosSuceden'">  <div *ngFor="let item of items">Descripción: {{item['descripcion']}}</div> </div>
+
+<div *ngIf="this.opcion=='cadaCuantoSucedenDesperfectos'">  <div *ngFor="let item of items">Fecha: {{item['fechaIncidencia']}}</div> </div>
+
+<div *ngIf="this.opcion=='quienHizoMasTickets'">  <div *ngFor="let item of items">Cliente: {{item['_id']}} - Tickets creados: {{item['total']}}</div> </div>
+
+<div *ngIf="this.opcion=='clienteEsEmpleado'">  <div *ngFor="let item of items">Cliente: {{item['nombre']}} - Dni: {{item['_id']}}</div> </div>
+
+<div *ngIf="this.opcion=='zonaConMasClientes'">  <div *ngFor="let item of items">Localidad: {{item['_id']}} - Clientes: {{item['total']}}</div> </div>
+
+<div *ngIf="this.opcion=='quienAtiendeMasTickets'">  <div *ngFor="let item of items">Empleado: {{item['_id']}} - Total: {{item['total']}}</div> </div>
+
+<div *ngIf="this.opcion=='aQueHora' || this.opcion=='trabajoAntesDeLas12' || this.opcion=='trabajoDespuesDeLas12'"> 
+    <button mat-raised-button (click)="llamarApi('empleado','trabajoAntesDeLas12')">Antes de las 12</button>  <button mat-raised-button (click)="llamarApi('empleado','trabajoDespuesDeLas12')">Despues de las 12</button> 
+    <div *ngIf="this.opcion=='trabajoAntesDeLas12'"> <div *ngFor="let item of items">Fecha: {{item['fechaIncidencia']}} - Tipo: {{item['tipo']}}</div>  </div> 
+    <div *ngIf="this.opcion=='trabajoDespuesDeLas12'"> <div *ngFor="let item of items">Fecha: {{item['fechaIncidencia']}} - Tipo: {{item['tipo']}}</div>  </div>
+</div>
+
+<div *ngIf="this.opcion=='queTanLejosDesperfecto'">  <div *ngFor="let item of items[0]"> Empleado: {{item['nombreEmpleado']}} - Cliente: {{item['nombreCliente']}} - Distancia: {{item['calcDistance']}}</div> </div>
+<div *ngIf="this.opcion=='queTanLejosDesperfecto'">  <div *ngFor="let item of items[1]"> Empleado: {{item['nombreEmpleado']}} - Cliente: {{item['nombreCliente']}} - Distancia: {{item['calcDistance']}}</div> </div>
+<div *ngIf="this.opcion=='queTanLejosDesperfecto'">  <div *ngFor="let item of items[2]"> Empleado: {{item['nombreEmpleado']}} - Cliente: {{item['nombreCliente']}} - Distancia: {{item['calcDistance']}}</div> </div>
